@@ -1,0 +1,11 @@
+<div class="m-4 card p-0 bg-tournament text-light">
+    <div class="row">
+        <div class="col-10 m-3">
+            <h5 class="card-title">{{ tournament.title }}</h5>
+            <p class="card-text">{{ tournament.description }}</p>
+        </div>
+        <div class="col">
+            <a class="btn btn-primary w-100 h-100" routerLink="/info" [queryParams]="queryParams">Info</a>
+        </div>
+    </div>
+</div>

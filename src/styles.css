@@ -1,0 +1,11 @@
+@import "bootstrap";
+
+.btn-primary {
+    color: #212529;
+    background-color: #00dfef;
+    border-color: #00dfef;
+}
+
+body{
+    background-color: #212529;
+}
