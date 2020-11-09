@@ -13,8 +13,14 @@
 
   <div class="navbar-collapse collapse" id="collapse">
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="/login">Login</a>
+      <li *ngIf="!loggedIn()" class="nav-item">
+        <a class="nav-link" href="/login">Log in</a>
+      </li>
+      <li *ngIf="!loggedIn()" class="nav-item">
+        <a class="nav-link" href="/register">Register</a>
+      </li>
+      <li *ngIf="loggedIn()" class="nav-item">
+        <a class="nav-link" (click)="logOut()">Log out</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="/tournaments">Tournaments</a>

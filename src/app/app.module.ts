@@ -12,6 +12,7 @@ import { TournamentPageComponent } from './tournament-page/tournament-page.compo
 import { LoaderComponent } from './shared/components/loader/loader.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { RegisterFormComponent } from './register-form/register-form.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { CommonModule } from '@angular/common';
     TournamentPageComponent,
     LoaderComponent,
     LoginFormComponent,
+    RegisterFormComponent,
   ],
   imports: [
     BrowserModule,

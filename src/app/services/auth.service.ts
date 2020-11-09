@@ -7,22 +7,45 @@ import { map } from 'rxjs/operators';
 })
 export class AuthService {
   baseUrl = 'http://localhost:5000/api/auth/';
-  userToken: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    console.log('Servis');
+  }
 
-  login(model: any) {
+  private requestOptions() {
+    const headers = new HttpHeaders({ 'Content-type': 'application/json' });
+    return { headers: headers };
+  }
+
+  logIn(model: any) {
+    return this.http
+      .post(this.baseUrl + 'login', model, this.requestOptions())
+      .pipe(
+        map((response: HttpResponse<any>) => {
+          const token = response['token'];
+          if (token) {
+            console.log(token);
+            localStorage.setItem('token', token);
+          }
+        })
+      );
+  }
+
+  register(model: any) {
     const headers = new HttpHeaders({ 'Content-type': 'application/json' });
     const options = { headers: headers };
-    return this.http.post(this.baseUrl + 'login', model, options).pipe(
-      map((response: HttpResponse<any>) => {
-        const token = response['token'];
-        if (token) {
-          console.log(token);
-          localStorage.setItem('token', token);
-          this.userToken = token;
-        }
-      })
+    return this.http.post(
+      this.baseUrl + 'register',
+      model,
+      this.requestOptions()
     );
+  }
+
+  logOut() {
+    localStorage.removeItem('token');
+  }
+
+  loggedIn() {
+    return !!localStorage.getItem('token');
   }
 }
