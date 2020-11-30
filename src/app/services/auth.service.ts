@@ -8,9 +8,7 @@ import { map } from 'rxjs/operators';
 export class AuthService {
   baseUrl = 'http://localhost:5000/api/auth/';
 
-  constructor(private http: HttpClient) {
-    console.log('Servis');
-  }
+  constructor(private http: HttpClient) {}
 
   private requestOptions() {
     const headers = new HttpHeaders({ 'Content-type': 'application/json' });
@@ -24,7 +22,6 @@ export class AuthService {
         map((response: HttpResponse<any>) => {
           const token = response['token'];
           if (token) {
-            console.log(token);
             localStorage.setItem('token', token);
           }
         })
