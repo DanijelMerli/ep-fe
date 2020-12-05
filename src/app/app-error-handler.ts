@@ -1,12 +1,13 @@
 import { ErrorHandler, Injectable } from '@angular/core';
+import { AlertifyService } from './alertify.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppErrorHandler implements ErrorHandler {
-  constructor() {}
+  constructor(private alertify: AlertifyService) {}
 
-  handleError(error: any): void {
-    console.log(error);
+  handleError(error: Error): void {
+    this.alertify.error(error.message);
   }
 }

@@ -1,7 +1,6 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { AlertifyService } from '../alertify.service';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -12,7 +11,11 @@ import { AuthService } from '../services/auth.service';
 export class RegisterFormComponent {
   model: any = {};
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private alertify: AlertifyService
+  ) {
     if (this.authService.loggedIn()) {
       this.router.navigate(['/']);
     }
@@ -21,28 +24,9 @@ export class RegisterFormComponent {
   register() {
     this.authService.register(this.model).subscribe(
       () => {
-        this.router.navigate(['/login']);
+        this.alertify.success('Registration successful');
       },
-      (error) => this.handleError(error)
+      (error) => this.authService.handleError(error)
     );
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    const applicationError = error.headers.get('Application-Error');
-    if (applicationError) {
-      throw new Error(applicationError);
-    }
-
-    const serverError = error.error;
-    let modelStateErrors = '';
-    if (serverError) {
-      for (const key in serverError) {
-        if (serverError[key]) {
-          modelStateErrors += serverError[key] + '\n';
-        }
-      }
-    }
-
-    throw new Error(modelStateErrors || 'Server error');
   }
 }

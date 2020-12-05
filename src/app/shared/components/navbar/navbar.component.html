@@ -2,29 +2,42 @@
   <a class="navbar-brand p-0" href="#"
     ><img style="max-height: 30px" src="assets/img/logo_full_light.svg"
   /></a>
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#collapse"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
 
-  <div class="navbar-collapse collapse" id="collapse">
-    <ul class="navbar-nav ml-auto">
-      <li *ngIf="!loggedIn()" class="nav-item">
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+      <a class="nav-link" href="/tournaments">Tournaments</a>
+    </li>
+    <ul *ngIf="!loggedIn()" class="navbar-nav">
+      <li>
         <a class="nav-link" href="/login">Log in</a>
       </li>
-      <li *ngIf="!loggedIn()" class="nav-item">
+      <li>
         <a class="nav-link" href="/register">Register</a>
       </li>
-      <li *ngIf="loggedIn()" class="nav-item">
-        <a class="nav-link" (click)="logOut()">Log out</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/tournaments">Tournaments</a>
-      </li>
     </ul>
-  </div>
+    <!--btn-group because only that works for dropdown positioning-->
+    <li
+      class="btn-group nav-item"
+      *ngIf="loggedIn()"
+      dropdown
+      placement="bottom right"
+    >
+      <a class="nav-link" dropdownToggle
+        >{{ getAuthService().decodedToken?.unique_name | titlecase }}
+        <fa-icon [icon]="faCaretDown"></fa-icon
+      ></a>
+      <ul class="dropdown-menu dropdown-menu-right" *dropdownMenu>
+        <li>
+          <a href="#" class="dropdown-item"
+            ><fa-icon [icon]="faUser"></fa-icon>Edit Profile</a
+          >
+        </li>
+        <li>
+          <a class="dropdown-item" (click)="logOut()"
+            ><fa-icon [icon]="faSignOutAlt"></fa-icon>Log out</a
+          >
+        </li>
+      </ul>
+    </li>
+  </ul>
 </nav>

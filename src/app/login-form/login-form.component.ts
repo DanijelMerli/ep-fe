@@ -1,6 +1,6 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertifyService } from '../alertify.service';
 import { AuthService } from '../services/auth.service';
 
 @Component({
@@ -11,7 +11,11 @@ import { AuthService } from '../services/auth.service';
 export class LoginFormComponent {
   model: any = {};
 
-  constructor(private authService: AuthService, private router: Router) {
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private alertify: AlertifyService
+  ) {
     if (this.authService.loggedIn()) {
       this.router.navigate(['/']);
     }
@@ -20,30 +24,12 @@ export class LoginFormComponent {
   logIn() {
     this.authService.logIn(this.model).subscribe(
       () => {
+        this.alertify.success('Login succesful');
         this.router.navigate(['/']);
       },
-      (error: Response) => {
-        throw new Error(`${error.status}: ${error.statusText}`);
+      (error) => {
+        this.authService.handleError(error);
       }
     );
-  }
-
-  private handleError(error: HttpErrorResponse) {
-    const applicationError = error.headers.get('Application-Error');
-    if (applicationError) {
-      throw new Error(applicationError);
-    }
-
-    const serverError = error.error;
-    let modelStateErrors = '';
-    if (serverError) {
-      for (const key in serverError) {
-        if (serverError[key]) {
-          modelStateErrors += serverError[key] + '\n';
-        }
-      }
-    }
-
-    throw new Error(modelStateErrors || 'Server error');
   }
 }

@@ -1,14 +1,23 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import {
+  HttpClient,
+  HttpErrorResponse,
+  HttpHeaders,
+  HttpResponse,
+} from '@angular/common/http';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { map } from 'rxjs/operators';
+import { AlertifyService } from '../alertify.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  baseUrl = 'http://localhost:5000/api/auth/';
+  private baseUrl = 'http://localhost:5000/api/auth/';
+  private jwtHelper = new JwtHelperService();
+  decodedToken;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private alertify: AlertifyService) {}
 
   private requestOptions() {
     const headers = new HttpHeaders({ 'Content-type': 'application/json' });
@@ -23,6 +32,7 @@ export class AuthService {
           const token = response['token'];
           if (token) {
             localStorage.setItem('token', token);
+            this.decodedToken = this.jwtHelper.decodeToken(token);
           }
         })
       );
@@ -40,9 +50,29 @@ export class AuthService {
 
   logOut() {
     localStorage.removeItem('token');
+    this.alertify.success('Logout successful');
   }
 
   loggedIn() {
-    return !!localStorage.getItem('token');
+    return !this.jwtHelper.isTokenExpired(localStorage.getItem('token'));
+  }
+
+  handleError(error: HttpErrorResponse) {
+    const applicationError = error.headers.get('Application-Error');
+    if (applicationError) {
+      throw new Error(applicationError);
+    }
+
+    const serverError = error.error;
+    let modelStateErrors = '';
+    if (serverError) {
+      for (const key in serverError) {
+        if (serverError[key]) {
+          modelStateErrors += serverError[key] + '\n';
+        }
+      }
+    }
+
+    throw new Error(modelStateErrors || 'Server error');
   }
 }
