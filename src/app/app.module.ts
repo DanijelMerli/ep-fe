@@ -14,6 +14,10 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RegisterFormComponent } from './register-form/register-form.component';
 import { AppErrorHandler } from './app-error-handler';
+import { JwtHelperService } from '@auth0/angular-jwt';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -32,8 +36,14 @@ import { AppErrorHandler } from './app-error-handler';
     HttpClientModule,
     FormsModule,
     CommonModule,
+    BrowserAnimationsModule,
+    BsDropdownModule.forRoot(),
+    FontAwesomeModule,
   ],
-  providers: [{ provide: ErrorHandler, useClass: AppErrorHandler }],
+  providers: [
+    { provide: ErrorHandler, useClass: AppErrorHandler },
+    JwtHelperService,
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
