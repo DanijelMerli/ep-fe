@@ -1,21 +1,21 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark sticky-top">
-  <a class="navbar-brand p-0" href="#"
+  <a class="navbar-brand p-0" [routerLink]="['']"
     ><img style="max-height: 30px" src="assets/img/logo_full_light.svg"
   /></a>
 
   <ul class="navbar-nav ml-auto">
-    <li class="nav-item">
-      <a class="nav-link" href="/tournaments">Tournaments</a>
+    <li class="" routerLinkActive="active">
+      <a class="nav-link" [routerLink]="['/tournaments']">Tournaments</a>
     </li>
     <ul *ngIf="!loggedIn()" class="navbar-nav">
-      <li>
-        <a class="nav-link" href="/login">Log in</a>
+      <li routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/login']">Log in</a>
       </li>
-      <li>
-        <a class="nav-link" href="/register">Register</a>
+      <li routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['/register']">Register</a>
       </li>
     </ul>
-    <!--btn-group because only that works for dropdown positioning-->
+    <!--btn-group class because only that works for dropdown positioning-->
     <li
       class="btn-group nav-item"
       *ngIf="loggedIn()"
@@ -28,7 +28,7 @@
       ></a>
       <ul class="dropdown-menu dropdown-menu-right" *dropdownMenu>
         <li>
-          <a href="#" class="dropdown-item"
+          <a [routerLink]="['']" class="dropdown-item"
             ><fa-icon [icon]="faUser"></fa-icon>Edit Profile</a
           >
         </li>
