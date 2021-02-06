@@ -8,6 +8,7 @@ import {
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { map } from 'rxjs/operators';
 import { AlertifyService } from '../alertify.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,11 @@ export class AuthService {
   private jwtHelper = new JwtHelperService();
   decodedToken;
 
-  constructor(private http: HttpClient, private alertify: AlertifyService) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private alertify: AlertifyService
+  ) {}
 
   private requestOptions() {
     const headers = new HttpHeaders({ 'Content-type': 'application/json' });
@@ -51,6 +56,7 @@ export class AuthService {
   logOut() {
     localStorage.removeItem('token');
     this.alertify.success('Logout successful');
+    this.router.navigate(['/']);
   }
 
   loggedIn() {
