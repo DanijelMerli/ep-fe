@@ -17,7 +17,7 @@ export class RegisterFormComponent {
     private alertify: AlertifyService
   ) {
     if (this.authService.loggedIn()) {
-      this.router.navigate(['/']);
+      this.router.navigate(['/tournaments']);
     }
   }
 

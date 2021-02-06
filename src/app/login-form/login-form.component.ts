@@ -25,10 +25,12 @@ export class LoginFormComponent {
     this.authService.logIn(this.model).subscribe(
       () => {
         this.alertify.success('Login succesful');
-        this.router.navigate(['/']);
       },
       (error) => {
         this.authService.handleError(error);
+      },
+      () => {
+        this.router.navigate(['/tournaments']);
       }
     );
   }
