@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { DataService } from '../shared/services/data.service';
 import { Observable } from 'rxjs';
-import { Tournament } from '../shared/models/tournament';
+import { Series } from '../shared/models/series';
 import { map } from 'rxjs/operators';
 
 @Injectable({
@@ -10,14 +10,14 @@ import { map } from 'rxjs/operators';
 })
 export class TournamentService extends DataService {
   constructor(http: HttpClient) {
-    super('http://localhost:5000/api/tournaments/', http);
+    super('https://api.pandascore.co/dota2/series/running/', http);
   }
 
-  get(): Observable<Tournament[]> {
-    return super.get().pipe(map((array) => array.map((o) => <Tournament>o)));
+  get(): Observable<Series[]> {
+    return super.get().pipe(map((array) => array.map((o) => <Series>o)));
   }
 
-  getOne(id: any): Observable<Tournament> {
-    return super.getOne(id).pipe(map((o) => <Tournament>o));
+  getOne(id: any): Observable<Series> {
+    return super.getOne(id).pipe(map((o) => <Series>o));
   }
 }

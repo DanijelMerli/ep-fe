@@ -1,17 +1,20 @@
 import { HttpClient } from '@angular/common/http';
-import { UrlSegment } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Tournament } from '../models/tournament';
 
 export class DataService {
+  apiToken = '?token=70MRXjyRB-iwpeUMk864S07GZkuBsykaQFaqRlc8Me6MjOUlh9w';
+  constructor(protected url: string, protected http: HttpClient) {}
 
-  constructor(protected url: string, protected http: HttpClient) { }
-
-  get(): Observable<any[]>{
-    return this.http.get<any[]>(this.url);
+  get(): Observable<any[]> {
+    return this.http.get<any[]>(this.url + this.apiToken);
   }
 
-  getOne(id: any): Observable<any>{
-    return this.http.get<any>(this.url + id);
+  getOne(id: any): Observable<any> {
+    return this.http.get<any>(
+      this.url +
+        '?filter[id]=' +
+        id +
+        '&token=70MRXjyRB-iwpeUMk864S07GZkuBsykaQFaqRlc8Me6MjOUlh9w'
+    );
   }
 }

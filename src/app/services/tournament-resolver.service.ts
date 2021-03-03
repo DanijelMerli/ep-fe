@@ -1,19 +1,24 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import {
+  ActivatedRouteSnapshot,
+  Resolve,
+  RouterStateSnapshot,
+} from '@angular/router';
 import { Observable } from 'rxjs';
-import { Tournament } from '../shared/models/tournament';
+import { Series } from '../shared/models/series';
 import { TournamentService } from './tournament.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class TournamentResolverService implements Resolve<Tournament> {
+export class TournamentResolverService implements Resolve<Series> {
+  constructor(private service: TournamentService) {}
 
-  constructor(private service: TournamentService) { }
-
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): 
-  Tournament | Observable<Tournament> | Promise<Tournament> {
-    const id = route.queryParamMap.get("id");
+  resolve(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
+  ): Series | Observable<Series> | Promise<Series> {
+    const id = route.queryParamMap.get('id');
     return this.service.getOne(id);
   }
 }

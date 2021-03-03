@@ -1,21 +1,20 @@
-import { query } from '@angular/animations';
 import { Component, Input } from '@angular/core';
-import { Tournament } from '../shared/models/tournament';
+import { Series } from '../shared/models/series';
 
 @Component({
   selector: 'tournament',
   templateUrl: './tournament.component.html',
-  styleUrls: ['./tournament.component.css']
+  styleUrls: ['./tournament.component.css'],
 })
 export class TournamentComponent {
-  
-  @Input() tournament: Tournament;
+  @Input() s: Series;
   queryParams: any;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
-    this.queryParams = { id: this.tournament.id }
+    this.queryParams = {
+      id: this.s.id,
+    };
   }
-
 }

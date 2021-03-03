@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Tournament } from '../shared/models/tournament';
+import { Series } from '../shared/models/series';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -8,10 +8,13 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./tournament-list.component.css'],
 })
 export class TournamentListComponent implements OnInit {
-  tournaments: Tournament[] = [];
+  series: Series[] = [];
   constructor(private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.route.data.subscribe((data) => (this.tournaments = data.tournaments));
+    this.route.data.subscribe((data) => {
+      console.log(data);
+      this.series = data.tournaments;
+    });
   }
 }

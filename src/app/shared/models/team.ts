@@ -1,7 +1,6 @@
-import { Logo } from './logo';
-
 export interface Team {
   id: number;
+  acronym: string;
   name: string;
-  logo: Logo;
+  image_url: string;
 }
